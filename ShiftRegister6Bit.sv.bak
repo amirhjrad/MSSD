@@ -1,0 +1,25 @@
+`timescale 1ns/1ns
+
+module ShiftRegister6bit (
+  input  clk,
+  input  rst,
+  /*input  en,*/
+  input  serIn,
+  output logic so,
+  output wire [5:0] data_out
+);
+  logic [5:0] shift_Logic;
+
+  always @(posedge clk , posedge rst) begin
+    if (rst) 
+      shift_Logic <= 6'b100000;
+    
+    else /*if (en)*/ begin
+      assign so = shift_Logic[0];	
+      shift_Logic <= {serIn,shift_Logic[5:1]};
+    end
+  end
+
+  assign data_out = shift_Logic;
+
+endmodule
